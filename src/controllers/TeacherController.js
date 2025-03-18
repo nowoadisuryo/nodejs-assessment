@@ -73,6 +73,23 @@ class TeacherController {
       next(error);
     }
   }
+
+  async eligibleStudentToReceiveNotif(req, res, next) {
+    try {
+      const { teacher, notification } = req.body;
+      throwIfMissing(teacher, 'teacher');
+      throwIfMissing(notification, 'notification');
+
+      const result = await this.teacherService.eligibleStudentToReceiveNotif(
+        teacher,
+        notification
+      );
+
+      res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = TeacherController;

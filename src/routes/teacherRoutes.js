@@ -16,5 +16,9 @@ module.exports = (container) => {
     controllers.teacherController.suspendStudent(req, res, next)
   );
 
+  router.post('/retrievefornotifications', (req, res, next) =>
+    controllers.teacherController.eligibleStudentToReceiveNotif(req, res, next)
+  );
+
   return router;
 };

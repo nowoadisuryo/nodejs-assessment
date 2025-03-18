@@ -1,10 +1,11 @@
-# **📌 API Server Setup Guide**
+# **📌 API Server Setup Guide On Windows**
 
 ## Prerequisites
 
 Ensure you have the following installed before proceeding:
 
-- **Node.js** `>= 20.0.0`
+- **Node.js** `>= 20.15.1`
+- **NPM** `>= 10.7.0`
 - **MySQL** (Ensure MySQL service is running)
 
 ---
@@ -13,42 +14,77 @@ Ensure you have the following installed before proceeding:
 
 Follow these steps to run the API server locally:
 
-### **1️⃣ Clone the Repository**
+### **1. Create the Project Folder**
+
+- Open Windows Command Prompt and create destination foler:
 
 ```sh
-git clone <repository-url>
-cd <repository-folder>
+mkdir [your-folder-path]
 ```
 
-### **2️⃣ Set Up Environment Variables**
+e.g.
 
-- Copy the example environment file:
+```sh
+mkdir D:\nowo-assessment
+```
+
+### **2. Clone the Repository**
+
+- Go to inside the folder
+
+```sh
+cd /d D:\nowo-assessment
+```
+
+- Clone the repository
+
+```sh
+git clone https://github.com/nowoadisuryo/nodejs-assessment.git
+cd nodejs-assessment
+```
+
+### **3. Set Up Environment Variables**
+
+- Create a .env file by copying .env.example:
   ```sh
-  cp .env.example .env
+  copy .env.example .env
   ```
-- Edit the `.env` file with your database credentials and configurations.
+- Edit the .env file and configure the following:
 
-### **3️⃣ Install Dependencies**
+  ```sh
+  DB_USER=<your_mysql_username>
+  DB_PASS=<your_mysql_password>
+  ```
+
+### **4. Install Dependencies**
+
+- Run the following command in Windows Command Prompt:
 
 ```sh
 npm install
 ```
 
-### **4️⃣ Set Up the Database**
+### **5. Seed the Database**
 
 - Ensure MySQL is running.
-- Run the database migration and seed data:
+- Create the database manually.
+
+  ```sh
+  CREATE DATABASE IF NOT EXISTS `nowo_nodejs_assessment`;
+  ```
+
+- Run the database seed data:
   ```sh
   npm run seed
   ```
 
-### **5️⃣ Run Test Coverage**
+### **6. Run Test Coverage**
 
 ```sh
 npm run test:coverage
 ```
 
-### **6️⃣ Start the Server**
+### **7. Start the Server**
 
 ```sh
 npm start
@@ -71,5 +107,85 @@ The server should now be running.
 | `npm run lint`          | Runs ESLint to check code quality         |
 | `npm run lint:fix`      | Runs ESLint to fix the code quality       |
 | `npm run format`        | Formats code using Prettier               |
+
+---
+
+## Endpoints
+
+### **1. Register one or more students to a specified teacher.**
+
+- Endpoint: `POST /api/register`
+- Headers: `Content-Type: application/json`
+- Success response status: HTTP 204
+- Request body example:
+
+```
+{
+  "teacher": "teacherken@gmail.com"
+  "students":
+    [
+      "studentjon@gmail.com",
+      "studenthon@gmail.com"
+    ]
+}
+```
+
+### **2. Retrieve a list of students common to a given list of teachers.**
+
+- Endpoint: `GET /api/commonstudents`
+- Success response status: HTTP 200
+- Request example 1: `GET /api/commonstudents?teacher=teacherken%40gmail.com`
+- Success response body 1:
+
+```
+{
+  "students" :
+    [
+      "commonstudent1@gmail.com",
+      "commonstudent2@gmail.com",
+      "student_only_under_teacher_ken@gmail.com"
+    ]
+}
+```
+
+### **3. Suspend a specified student.**
+
+- Endpoint: `POST /api/suspend`
+- Headers: `Content-Type: application/json`
+- Success response status: HTTP 204
+- Request body example:
+
+```
+{
+  "student" : "studentmary@gmail.com"
+}
+```
+
+### **4. Retrieve a list of students who can receive a given notification.**
+
+- Endpoint: `POST /api/retrievefornotifications`
+- Headers: `Content-Type: application/json`
+- Success response status: HTTP 200
+- Request body example:
+
+```
+{
+  "teacher":  "teacherken@gmail.com",
+  "notification": "Hello students! @studentagnes@gmail.com @studentmiche@gmail.com"
+}
+```
+
+- Success response body 1:
+
+```
+{
+  "recipients":
+    [
+      "studentbob@gmail.com",
+      "studentagnes@gmail.com",
+      "studentmiche@gmail.com"
+    ]
+}
+```
 
 ---

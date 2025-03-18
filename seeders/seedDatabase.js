@@ -17,9 +17,10 @@ const seedDatabase = async () => {
     const student1 = await Student.create({ email: 'student1@example.com' });
     const student2 = await Student.create({ email: 'student2@example.com' });
     const student3 = await Student.create({ email: 'student3@example.com' });
+    const student4 = await Student.create({ email: 'student4@example.com' });
 
     // Associate Students with Teachers (Many-to-Many Relationship)
-    await teacher1.addStudents([student1, student2]);
+    await teacher1.addStudents([student1, student2, student4]);
     await teacher2.addStudents([student2, student3]);
 
     logger.info('✅ Database seeding completed successfully!');

@@ -1,3 +1,5 @@
+const { extractEmailsFromText } = require('../utils/extract');
+
 /**
  * Teacher Service
  */
@@ -13,6 +15,7 @@ class TeacherService {
     this.config = opts.config;
     this.logger = opts.logger;
     this.teacherRepository = opts.repositories.teacherRepository;
+    this.studentRepository = opts.repositories.studentRepository;
   }
 
   /**
@@ -43,7 +46,31 @@ class TeacherService {
   }
 
   async suspendStudent(studentEmail) {
-    return await this.teacherRepository.suspendStudent(studentEmail);
+    return await this.studentRepository.suspendStudent(studentEmail);
+  }
+
+  async eligibleStudentToReceiveNotif(teacher, notification) {
+    // extract student's emails from notification
+    const emails = extractEmailsFromText(notification);
+
+    // filter student not suspended
+    let eligibleEmails =
+      await this.studentRepository.findByEmailsNotSuspended(emails);
+    eligibleEmails = eligibleEmails.map((item) => item.email);
+
+    // get registered students of a teacher
+    let registeredStudentsEmail =
+      await this.teacherRepository.findStudentsRegistered(teacher);
+    registeredStudentsEmail = registeredStudentsEmail.map((item) => item.email);
+
+    // remove duplicate emails
+    const uniqueEmails = [
+      ...new Set([...eligibleEmails, ...registeredStudentsEmail]),
+    ];
+
+    return {
+      recipients: uniqueEmails,
+    };
   }
 }
 

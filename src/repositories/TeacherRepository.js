@@ -20,7 +20,6 @@ class TeacherRepository {
     this.logger = opts.logger;
     this.Teacher = opts.models.teacherModel;
     this.Student = opts.models.studentModel;
-    this.StudentRepository = opts.studentRepository;
   }
 
   /**
@@ -115,21 +114,30 @@ class TeacherRepository {
     return result.map((item) => item.email);
   }
 
-  async suspendStudent(studentEmail) {
-    const student = await this.StudentRepository.findByEmail(studentEmail);
-    if (!student) {
-      this.logger.error('Student not found');
-      throw new Error('Student not found');
+  async findStudentsRegistered(teacherEmail) {
+    const teacher = await this.findByEmail(teacherEmail);
+    if (!teacher) {
+      this.logger.error('Teacher not found');
+      throw new Error('Teacher not found');
     }
 
-    if (student.suspended === true) {
-      this.logger.error('Student was already suspended');
-      throw new Error('Student was already suspended');
-    }
+    const result = await this.Student.findAll({
+      attributes: ['email'],
+      where: { suspended: false },
+      include: [
+        {
+          model: this.Teacher,
+          as: 'teachers',
+          attributes: [],
+          where: { email: teacherEmail },
+          through: { attributes: [] },
+        },
+      ],
+      group: ['Student.email'],
+      raw: true,
+    });
 
-    await student.update({ suspended: true });
-    await student.save();
-    return student;
+    return result;
   }
 }
 
