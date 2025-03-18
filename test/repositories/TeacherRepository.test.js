@@ -25,6 +25,7 @@ describe('TeacherRepository', () => {
         teacherModel: {
           findOne: sandbox.stub(),
           addStudents: sandbox.stub(),
+          findAll: sandbox.stub(),
         },
         studentModel: {
           findAll: sandbox.stub(),
@@ -68,10 +69,14 @@ describe('TeacherRepository', () => {
       await expect(actual).to.eventually.rejectedWith(Error);
     });
 
+    function filterStudents(students, inputStudents) {
+      return students.filter((item) => inputStudents.includes(item));
+    }
+
     it('should throw error when some students not found', async () => {
       opts.models.teacherModel.findOne.resolves(teachers[0]);
       opts.models.studentModel.findAll.resolves(() =>
-        students.filter((item) => inputStudents.includes(item))
+        filterStudents(students, inputStudents)
       );
 
       const actual = teacherRepository.registerStudents(
@@ -94,6 +99,47 @@ describe('TeacherRepository', () => {
       );
 
       expect(actual.addStudents).to.be.calledOnce;
+    });
+  });
+
+  describe('#findCommonStudents', () => {
+    it('should throw error when some teachers not found', async () => {
+      opts.models.teacherModel.findAll.resolves(['']);
+
+      const actual = teacherRepository.findCommonStudents(teachers);
+
+      await expect(actual).to.eventually.rejectedWith(Error);
+    });
+
+    it('should success find common students', async () => {
+      opts.models.teacherModel.findAll.resolves(['', '']);
+      opts.models.studentModel.findAll.resolves(students);
+
+      const actual = await teacherRepository.findCommonStudents(teachers);
+
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.lengthOf(2);
+    });
+  });
+
+  describe('#findRegisteredStudents', () => {
+    it('should throw error when a teacher not found', async () => {
+      opts.models.teacherModel.findOne.resolves(null);
+
+      const actual = teacherRepository.findRegisteredStudents(inputTeacher);
+
+      await expect(actual).to.eventually.rejectedWith(Error);
+    });
+
+    it('should success find registered students', async () => {
+      opts.models.teacherModel.findOne.resolves({});
+      opts.models.studentModel.findAll.resolves(students);
+
+      const actual =
+        await teacherRepository.findRegisteredStudents(inputTeacher);
+
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.lengthOf(2);
     });
   });
 });
