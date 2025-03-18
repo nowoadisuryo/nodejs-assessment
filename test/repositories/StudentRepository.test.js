@@ -1,20 +1,14 @@
 const StudentRepository = require('../../src/repositories/StudentRepository');
-const { MissingValueError } = require('../../src/utils/assert');
 
 describe('StudentRepository', () => {
   let opts;
   let clock;
   let studentRepository;
   const sandbox = sinon.createSandbox();
-  const teachers = [
-    { id: 1, email: 'teacher1@gmail.com' },
-    { id: 2, email: 'teacher2@gmail.com' },
-  ];
   const students = [
     { id: 1, email: 'student1@gmail.com', suspended: false },
     { id: 2, email: 'student2@gmail.com', suspended: false },
   ];
-  const inputTeacher = 'teacher1@gmail.com';
   const inputStudents = ['student1@gmail.com', 'student3@gmail.com'];
   const inputStudent = 'student1@gmail.com';
 
@@ -23,11 +17,6 @@ describe('StudentRepository', () => {
 
     opts = {
       models: {
-        teacherModel: {
-          findOne: sandbox.stub(),
-          addStudents: sandbox.stub(),
-          findAll: sandbox.stub(),
-        },
         studentModel: {
           findOne: sandbox.stub(),
           findAll: sandbox.stub(),
