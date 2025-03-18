@@ -41,6 +41,10 @@ class TeacherService {
       students: result,
     };
   }
+
+  async suspendStudent(studentEmail) {
+    return await this.teacherRepository.suspendStudent(studentEmail);
+  }
 }
 
 module.exports = TeacherService;

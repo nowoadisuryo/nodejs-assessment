@@ -1,5 +1,6 @@
 const { createContainer, asClass, asValue, asFunction } = require('awilix');
 
+const StudentRepository = require('../repositories/StudentRepository');
 const TeacherRepository = require('../repositories/TeacherRepository');
 const TeacherService = require('../services/TeacherService');
 const TeacherController = require('../controllers/TeacherController');
@@ -15,6 +16,7 @@ container.register({
   teacherModel: asValue(Teacher),
   studentModel: asValue(Student),
   teacherRepository: asClass(TeacherRepository).singleton(),
+  studentRepository: asClass(StudentRepository).singleton(),
   teacherController: asClass(TeacherController).singleton(),
   teacherService: asClass(TeacherService).singleton(),
 });
@@ -26,8 +28,9 @@ container.register({
     teacherModel,
     studentModel,
   })).singleton(),
-  repositories: asFunction(({ teacherRepository }) => ({
+  repositories: asFunction(({ teacherRepository, studentRepository }) => ({
     teacherRepository,
+    studentRepository,
   })).singleton(),
   controllers: asFunction(({ teacherController }) => ({
     teacherController,

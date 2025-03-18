@@ -60,6 +60,19 @@ class TeacherController {
       next(error);
     }
   }
+
+  async suspendStudent(req, res, next) {
+    try {
+      const { student } = req.body;
+      throwIfMissing(student, 'student');
+
+      await this.teacherService.suspendStudent(student);
+
+      res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = TeacherController;

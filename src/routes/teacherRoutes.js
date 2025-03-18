@@ -12,5 +12,9 @@ module.exports = (container) => {
     controllers.teacherController.commonStudents(req, res, next)
   );
 
+  router.post('/suspend', (req, res, next) =>
+    controllers.teacherController.suspendStudent(req, res, next)
+  );
+
   return router;
 };
