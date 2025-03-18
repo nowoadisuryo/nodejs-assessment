@@ -54,6 +54,8 @@ cd nodejs-assessment
   ```sh
   DB_USER=<your_mysql_username>
   DB_PASS=<your_mysql_password>
+  DB_HOST=<your_mysql_host>
+  DB_PORT=<your_mysql_port>
   ```
 
 ### **4. Install Dependencies**

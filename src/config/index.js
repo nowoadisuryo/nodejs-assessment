@@ -12,6 +12,7 @@ const config = {
     dbUser: process.env.DB_USER,
     dbPass: process.env.DB_PASS,
     dbHost: process.env.DB_HOST,
+    dbPort: process.env.DB_PORT || 3306,
   },
 };
 
