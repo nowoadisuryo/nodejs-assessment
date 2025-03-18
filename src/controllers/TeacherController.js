@@ -20,7 +20,7 @@ class TeacherController {
   }
 
   /**
-   * Register students controller
+   * Register students
    * @param {object} req - request object
    * @param {object} res - response object
    * @param {function} next - next function
@@ -61,6 +61,13 @@ class TeacherController {
     }
   }
 
+  /**
+   * Suspend a student
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {function} next - next function
+   * @returns - no content
+   */
   async suspendStudent(req, res, next) {
     try {
       const { student } = req.body;
@@ -74,6 +81,13 @@ class TeacherController {
     }
   }
 
+  /**
+   * Find students to receive notification
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {function} next - next function
+   * @returns {Array<string>} - list of student emails
+   */
   async eligibleStudentToReceiveNotif(req, res, next) {
     try {
       const { teacher, notification } = req.body;

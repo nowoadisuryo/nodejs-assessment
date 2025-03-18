@@ -45,27 +45,37 @@ class TeacherService {
     };
   }
 
+  /**
+   * Suspend a student
+   * @param {string} studentEmail - student's email
+   * @returns - no content
+   */
   async suspendStudent(studentEmail) {
     return await this.studentRepository.suspendStudent(studentEmail);
   }
 
+  /**
+   * Find students to receive notification
+   * @param {string} teacher - teacher's email
+   * @param {string} notification - notification text
+   * @returns {Array<string>} - list of student emails
+   */
   async eligibleStudentToReceiveNotif(teacher, notification) {
     // extract student's emails from notification
     const emails = extractEmailsFromText(notification);
 
-    // filter student not suspended
-    let eligibleEmails =
-      await this.studentRepository.findByEmailsNotSuspended(emails);
-    eligibleEmails = eligibleEmails.map((item) => item.email);
-
-    // get registered students of a teacher
-    let registeredStudentsEmail =
-      await this.teacherRepository.findStudentsRegistered(teacher);
-    registeredStudentsEmail = registeredStudentsEmail.map((item) => item.email);
+    // filter student not suspended and get registered students of a teacher
+    const [eligibleEmails, registeredStudentsEmail] = await Promise.all([
+      this.studentRepository.findByEmailsNotSuspended(emails),
+      this.teacherRepository.findRegisteredStudents(teacher),
+    ]);
 
     // remove duplicate emails
     const uniqueEmails = [
-      ...new Set([...eligibleEmails, ...registeredStudentsEmail]),
+      ...new Set([
+        ...eligibleEmails.map((item) => item.email),
+        ...registeredStudentsEmail.map((item) => item.email),
+      ]),
     ];
 
     return {

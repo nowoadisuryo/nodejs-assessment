@@ -23,11 +23,18 @@ class StudentRepository {
    * @returns {Sequelize} - Sequelize instance of Teacher
    */
   async findByEmail(email) {
-    this.logger.info(`Trying to findOne student by email - ${email}`);
+    this.logger.info(
+      `[StudentRepository] Trying to findOne student by email - ${email}`
+    );
 
     return await this.Student.findOne({ where: { email } });
   }
 
+  /**
+   * Suspend a student
+   * @param {string} studentEmail - student's email
+   * @returns {Sequelize} - Sequelize instance of Student
+   */
   async suspendStudent(studentEmail) {
     const student = await this.findByEmail(studentEmail);
     if (!student) {
@@ -40,14 +47,21 @@ class StudentRepository {
       throw new Error('Student was already suspended');
     }
 
+    this.logger.info('[StudentRepository] Trying to suspend a student');
+
     await student.update({ suspended: true });
     await student.save();
     return student;
   }
 
+  /**
+   * Find unsuspend students by email
+   * @param {Array<string>} emails - list of student emails
+   * @returns {Array<object>} - unsuspend students
+   */
   async findByEmailsNotSuspended(emails) {
     this.logger.info(
-      `Trying to findAll student by email and not suspended - ${emails}`
+      `[StudentRepository] Trying to findAll student by email and not suspended - ${emails}`
     );
 
     return await this.Student.findAll({

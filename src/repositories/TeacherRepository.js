@@ -28,7 +28,9 @@ class TeacherRepository {
    * @returns {Sequelize} - Sequelize instance of Teacher
    */
   async findByEmail(email) {
-    this.logger.info(`Trying to findOne teacher by email - ${email}`);
+    this.logger.info(
+      `[TeacherRepository] Trying to findOne teacher by email - ${email}`
+    );
 
     return await this.Teacher.findOne({ where: { email } });
   }
@@ -57,7 +59,8 @@ class TeacherRepository {
       throw new Error('Some students not found');
     }
 
-    this.logger.info('Trying to register students');
+    this.logger.info('[TeacherRepository] Trying to register students');
+
     await teacher.addStudents(students);
     return teacher;
   }
@@ -69,7 +72,7 @@ class TeacherRepository {
    */
   async findTeachersInArray(teacherEmails) {
     this.logger.info(
-      `Trying to findAll teachers within the array - ${teacherEmails}`
+      `[TeacherRepository] Trying to findAll teachers within the array - ${teacherEmails}`
     );
 
     return await this.Teacher.findAll({
@@ -90,7 +93,7 @@ class TeacherRepository {
       throw new Error('Some teachers not found');
     }
 
-    this.logger.info('Trying to find common students');
+    this.logger.info('[TeacherRepository] Trying to find common students');
 
     const result = await this.Student.findAll({
       attributes: ['email'], // select email column of Student
@@ -114,12 +117,19 @@ class TeacherRepository {
     return result.map((item) => item.email);
   }
 
-  async findStudentsRegistered(teacherEmail) {
+  /**
+   * Find registered students of a teacher
+   * @param {string} teacherEmail - teacher's email
+   * @returns {Array<object>} - list of student emails
+   */
+  async findRegisteredStudents(teacherEmail) {
     const teacher = await this.findByEmail(teacherEmail);
     if (!teacher) {
       this.logger.error('Teacher not found');
       throw new Error('Teacher not found');
     }
+
+    this.logger.info('[TeacherRepository] Trying to find registered students');
 
     const result = await this.Student.findAll({
       attributes: ['email'],
