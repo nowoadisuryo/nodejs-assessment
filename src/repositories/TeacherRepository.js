@@ -47,16 +47,16 @@ class TeacherRepository {
 
     const teacher = await this.findByEmail(teacherEmail);
     if (!teacher) {
-      this.logger.error('Teacher not found');
-      throw new Error('Teacher not found');
+      this.logger.error('Teacher is not found');
+      throw new Error('Teacher is not found');
     }
 
     const students = await this.Student.findAll({
       where: { email: studentEmails },
     });
     if (students.length !== studentEmails.length) {
-      this.logger.error('Some students not found');
-      throw new Error('Some students not found');
+      this.logger.error('Some students are not found');
+      throw new Error('Some students are not found');
     }
 
     this.logger.info('[TeacherRepository] Trying to register students');
@@ -89,8 +89,8 @@ class TeacherRepository {
   async findCommonStudents(teacherEmails) {
     const teachers = await this.findTeachersInArray(teacherEmails);
     if (teachers.length !== teacherEmails.length) {
-      this.logger.error('Some teachers not found');
-      throw new Error('Some teachers not found');
+      this.logger.error('Some teachers are not found');
+      throw new Error('Some teachers are not found');
     }
 
     this.logger.info('[TeacherRepository] Trying to find common students');
@@ -125,8 +125,8 @@ class TeacherRepository {
   async findRegisteredStudents(teacherEmail) {
     const teacher = await this.findByEmail(teacherEmail);
     if (!teacher) {
-      this.logger.error('Teacher not found');
-      throw new Error('Teacher not found');
+      this.logger.error('Teacher is not found');
+      throw new Error('Teacher is not found');
     }
 
     this.logger.info('[TeacherRepository] Trying to find registered students');

@@ -38,8 +38,8 @@ class StudentRepository {
   async suspendStudent(studentEmail) {
     const student = await this.findByEmail(studentEmail);
     if (!student) {
-      this.logger.error('Student not found');
-      throw new Error('Student not found');
+      this.logger.error('Student is not found');
+      throw new Error('Student is not found');
     }
 
     if (student.suspended === true) {
