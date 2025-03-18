@@ -66,23 +66,32 @@ class TeacherService {
     // extract student's emails from notification
     const emails = extractEmailsFromText(notification);
 
-    // filter student not suspended and get registered students of a teacher
-    const [eligibleEmails, registeredStudentsEmail] = await Promise.all([
-      this.studentRepository.findByEmailsNotSuspended(emails),
-      this.teacherRepository.findRegisteredStudents(teacher),
-    ]);
+    if (emails.length > 0) {
+      // filter student not suspended and get registered students of a teacher
+      const [eligibleEmails, registeredStudentsEmail] = await Promise.all([
+        this.studentRepository.findByEmailsNotSuspended(emails),
+        this.teacherRepository.findRegisteredStudents(teacher),
+      ]);
 
-    // remove duplicate emails
-    const uniqueEmails = [
-      ...new Set([
-        ...eligibleEmails.map((item) => item.email),
-        ...registeredStudentsEmail.map((item) => item.email),
-      ]),
-    ];
+      // remove duplicate emails
+      const uniqueEmails = [
+        ...new Set([
+          ...eligibleEmails.map((item) => item.email),
+          ...registeredStudentsEmail.map((item) => item.email),
+        ]),
+      ];
 
-    return {
-      recipients: uniqueEmails,
-    };
+      return {
+        recipients: uniqueEmails,
+      };
+    } else {
+      const registeredStudentsEmail =
+        await this.teacherRepository.findRegisteredStudents(teacher);
+
+      return {
+        recipients: registeredStudentsEmail.map((item) => item.email),
+      };
+    }
   }
 }
 
