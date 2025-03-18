@@ -101,6 +101,13 @@ The server should now be running.
 
 ## Runs the API server using Docker
 
+## Prerequisites
+
+Ensure you have the following installed before proceeding:
+
+- **Docker** (Ensure Docker service is running)
+- Ensure docker-compose is installed
+
 Follow these steps to run the API server using Docker:
 
 ### **1. Set Up Environment Variables**
