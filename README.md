@@ -128,7 +128,7 @@ Follow these steps to run the API server using Docker:
 
 ### **2. Set Up Docker Compose**
 
-- Create a .env file by copying .env.example:
+- Create a docker-compose.yaml file by copying docker-compose.yaml.example:
   ```sh
   copy docker-compose.yaml.example docker-compose.yaml
   ```
