@@ -49,6 +49,7 @@ cd nodejs-assessment
   ```sh
   copy .env.example .env
   ```
+- Open the .env file through file explorer or command prompt.
 - Edit the .env file and configure the following:
 
   ```sh
@@ -70,6 +71,8 @@ npm install
 
 - Ensure MySQL is running.
 - Create the database manually.
+- Open MySQL Workbench or any MySQL client.
+- Connect to the server and then execute this query:
 
   ```sh
   CREATE DATABASE IF NOT EXISTS `nowo_nodejs_assessment`;
@@ -96,6 +99,57 @@ The server should now be running.
 
 ---
 
+## Runs the API server using Docker
+
+Follow these steps to run the API server using Docker:
+
+### **1. Set Up Environment Variables**
+
+- Create a .env file by copying .env.example:
+  ```sh
+  copy .env.example .env
+  ```
+- Open the .env file through file explorer or command prompt.
+- Edit the .env file and configure the following:
+
+  ```sh
+  DB_USER=<your_mysql_username>
+  DB_PASS=<your_mysql_password>
+  DB_HOST=<your_mysql_host>
+  DB_PORT=<your_mysql_port>
+  ```
+
+### **2. Set Up Docker Compose**
+
+- Create a .env file by copying .env.example:
+  ```sh
+  copy docker-compose.yaml.example docker-compose.yaml
+  ```
+- Open the docker-compose.yaml file through file explorer or command prompt.
+- Edit the docker-compose.yaml file and configure the following:
+
+  ```sh
+  MYSQL_ROOT_PASSWORD: <your_mysql_root_password>
+  MYSQL_USER: <your_mysql_username>
+  MYSQL_PASSWORD: <your_mysql_password>
+  ```
+
+### **3. Build and Run the Containers**
+
+- Open command prompt and run the following commands:
+  ```sh
+  docker-compose up --build -d
+  ```
+
+### **4. Stopping and Removing Containers**
+
+- Open command prompt and run the following commands:
+  ```sh
+  docker-compose down
+  ```
+
+---
+
 ## Available Scripts
 
 | Command                 | Description                               |
@@ -111,6 +165,10 @@ The server should now be running.
 | `npm run format`        | Formats code using Prettier               |
 
 ---
+
+## Database Schema Diagram
+
+![alt text](image.png)
 
 ## Endpoints
 
