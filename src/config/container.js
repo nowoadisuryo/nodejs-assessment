@@ -6,7 +6,7 @@ const TeacherService = require('../services/TeacherService');
 const TeacherController = require('../controllers/TeacherController');
 const { Teacher, Student } = require('../models');
 const config = require('./index');
-const logger = require('../utils/logger');
+const { logger } = require('../utils');
 
 const container = createContainer();
 

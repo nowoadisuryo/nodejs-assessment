@@ -1,4 +1,6 @@
-const { extractEmailsFromText } = require('../utils/extract');
+const {
+  extract: { extractEmailsFromText },
+} = require('../utils');
 
 /**
  * Teacher Service
