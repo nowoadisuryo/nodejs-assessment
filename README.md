@@ -169,7 +169,7 @@ Ensure you have the following before proceeding:
 
 ```
 {
-  "teacher": "teacherken@gmail.com"
+  "teacher": "teacherken@gmail.com",
   "students":
     [
       "studentjon@gmail.com",
