@@ -1,5 +1,5 @@
+const { MissingValueError, NotFoundError } = require('../../src/errors');
 const TeacherRepository = require('../../src/repositories/TeacherRepository');
-const { MissingValueError } = require('../../src/utils/assert');
 
 describe('TeacherRepository', () => {
   let opts;
@@ -66,7 +66,7 @@ describe('TeacherRepository', () => {
         inputStudents
       );
 
-      await expect(actual).to.eventually.rejectedWith(Error);
+      await expect(actual).to.eventually.rejectedWith(NotFoundError);
     });
 
     function filterStudents(students, inputStudents) {
@@ -84,7 +84,7 @@ describe('TeacherRepository', () => {
         inputStudents
       );
 
-      await expect(actual).to.eventually.rejectedWith(Error);
+      await expect(actual).to.eventually.rejectedWith(NotFoundError);
     });
 
     it('should success register students', async () => {
@@ -108,7 +108,7 @@ describe('TeacherRepository', () => {
 
       const actual = teacherRepository.findCommonStudents(teachers);
 
-      await expect(actual).to.eventually.rejectedWith(Error);
+      await expect(actual).to.eventually.rejectedWith(NotFoundError);
     });
 
     it('should success find common students', async () => {
@@ -128,7 +128,7 @@ describe('TeacherRepository', () => {
 
       const actual = teacherRepository.findRegisteredStudents(inputTeacher);
 
-      await expect(actual).to.eventually.rejectedWith(Error);
+      await expect(actual).to.eventually.rejectedWith(NotFoundError);
     });
 
     it('should success find registered students', async () => {

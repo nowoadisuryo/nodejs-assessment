@@ -1,3 +1,4 @@
+const { NotFoundError, BadRequestError } = require('../../src/errors');
 const StudentRepository = require('../../src/repositories/StudentRepository');
 
 describe('StudentRepository', () => {
@@ -42,7 +43,7 @@ describe('StudentRepository', () => {
 
       const actual = studentRepository.suspendStudent(inputStudent);
 
-      await expect(actual).to.eventually.rejectedWith(Error);
+      await expect(actual).to.eventually.rejectedWith(NotFoundError);
     });
 
     it('should throw error when student was already suspended', async () => {
@@ -50,7 +51,7 @@ describe('StudentRepository', () => {
 
       const actual = studentRepository.suspendStudent(inputStudent);
 
-      await expect(actual).to.eventually.rejectedWith(Error);
+      await expect(actual).to.eventually.rejectedWith(BadRequestError);
     });
 
     it('should success suspend a student', async () => {

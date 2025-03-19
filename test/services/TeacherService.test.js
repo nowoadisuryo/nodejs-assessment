@@ -87,7 +87,7 @@ describe('TeacherService', function () {
   describe('eligibleStudentToReceiveNotif', function () {
     it('should return the list of eligible students', async function () {
       const teacher = 'teacher@example.com';
-      const notification = 'Hello @student1@example.com @student2@example.com';
+      const notification = 'Hello @student1@example.com';
       const eligibleEmails = [{ email: 'student1@example.com' }];
       const registeredStudentsEmail = [{ email: 'student3@example.com' }];
 
@@ -105,6 +105,30 @@ describe('TeacherService', function () {
 
       expect(result).to.deep.equal({
         recipients: ['student1@example.com', 'student3@example.com'],
+      });
+      expect(
+        opts.repositories.teacherRepository.findRegisteredStudents.calledOnceWithExactly(
+          teacher
+        )
+      ).to.be.true;
+    });
+
+    it('should return the list of eligible students when there are no students mentioned', async function () {
+      const teacher = 'teacher@example.com';
+      const notification = 'Hello';
+      const registeredStudentsEmail = [{ email: 'student3@example.com' }];
+
+      opts.repositories.teacherRepository.findRegisteredStudents.resolves(
+        registeredStudentsEmail
+      );
+
+      const result = await teacherService.eligibleStudentToReceiveNotif(
+        teacher,
+        notification
+      );
+
+      expect(result).to.deep.equal({
+        recipients: ['student3@example.com'],
       });
       expect(
         opts.repositories.teacherRepository.findRegisteredStudents.calledOnceWithExactly(
