@@ -1,4 +1,14 @@
-# **📌 API Server Setup Guide On Windows**
+# **Hosted API Endpoint**
+
+The API is hosted at the following URL:
+
+🔗 **[http://13.250.41.38:3000/api](http://13.250.41.38:3000/api)**
+
+Use this link to interact with the API.
+
+---
+
+# **API Server Setup Guide On Windows**
 
 ## Prerequisites
 
@@ -18,30 +28,30 @@ Follow these steps to run the API server locally:
 
 - Open Windows Command Prompt and create destination foler:
 
-```sh
-mkdir [your-folder-path]
-```
+  ```sh
+  mkdir [your-folder-path]
+  ```
 
-e.g.
+  e.g.
 
-```sh
-mkdir D:\nowo-assessment
-```
+  ```sh
+  mkdir D:\nowo-assessment
+  ```
 
 ### **2. Clone the Repository**
 
 - Go to inside the folder
 
-```sh
-cd /d D:\nowo-assessment
-```
+  ```sh
+  cd /d D:\nowo-assessment
+  ```
 
-- Clone the repository
+  - Clone the repository
 
-```sh
-git clone https://github.com/nowoadisuryo/nodejs-assessment.git
-cd nodejs-assessment
-```
+  ```sh
+  git clone https://github.com/nowoadisuryo/nodejs-assessment.git
+  cd nodejs-assessment
+  ```
 
 ### **3. Set Up Environment Variables**
 
@@ -63,16 +73,16 @@ cd nodejs-assessment
 
 - Run the following command in Windows Command Prompt:
 
-```sh
-npm install
-```
+  ```sh
+  npm install
+  ```
 
 ### **5. Seed the Database**
 
 - Ensure MySQL is running.
 - Create the database manually.
 - Open MySQL Workbench or any MySQL client.
-- Connect to the server and then execute this query:
+- Connect to the MySQL server and then execute this query:
 
   ```sh
   CREATE DATABASE IF NOT EXISTS `nowo_nodejs_assessment`;
