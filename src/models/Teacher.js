@@ -9,7 +9,15 @@ const Teacher = sequelize.define(
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['email'],
+      },
+    ],
+  }
 );
 
 module.exports = Teacher;

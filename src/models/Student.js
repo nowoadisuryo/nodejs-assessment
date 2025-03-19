@@ -10,7 +10,15 @@ const Student = sequelize.define(
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     suspended: { type: DataTypes.BOOLEAN, defaultValue: false },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['email'],
+      },
+    ],
+  }
 );
 
 module.exports = Student;
