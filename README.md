@@ -181,7 +181,7 @@ Ensure you have the following before proceeding:
 ### **2. Retrieve a list of students common to a given list of teachers.**
 
 - Local Endpoint: `GET http://localhost:3000/api/commonstudents`
-- Cloud Endpoint: `GET http://13.250.41.38:3000/api/regiscommonstudentster`
+- Cloud Endpoint: `GET http://13.250.41.38:3000/api/commonstudents`
 - Success response status: HTTP 200
 - Request example: `GET /api/commonstudents?teacher=teacherken%40gmail.com`
 - Success response body:
