@@ -4,9 +4,10 @@
 class NotFoundError extends Error {
   /**
    * Constructor
+   * @param {string} message - error message
    */
-  constructor() {
-    super();
+  constructor(message) {
+    super(message || 'Not found');
 
     // define error's name and status
     this.name = 'NotFoundError';
