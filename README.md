@@ -8,6 +8,12 @@ Use this link to interact with the API.
 
 ---
 
+## Database Schema Diagram
+
+![alt text](image.png)
+
+---
+
 # **Initial Data**
 
 ### **Students**
@@ -21,6 +27,8 @@ Use this link to interact with the API.
 ### **Teacher_Student**
 
 ## ![Teacher_Student](image-3.png)
+
+---
 
 # **API Server Setup Guide On Windows**
 
@@ -139,10 +147,6 @@ The server should now be running.
 | `npm run format`        | Formats code using Prettier               |
 
 ---
-
-## Database Schema Diagram
-
-![alt text](image.png)
 
 ## Endpoints
 
