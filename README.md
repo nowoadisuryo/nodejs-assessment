@@ -158,6 +158,10 @@ Ensure you have the following before proceeding:
 
 - Installed the latest version of **Postman** ([download](https://www.postman.com/downloads/))
 - Imported the **Postman Collection** from the repository (api.postman_collection.json)
+  - Open Postman
+  - Open collections tab
+  - Click import
+  - Drop or open file \nodejs-assessment\api.postman_collection.json
 
 ### **1. Register one or more students to a specified teacher.**
 
