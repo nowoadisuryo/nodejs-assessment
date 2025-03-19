@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+// define the configurations
 const config = {
   env: process.env.NODE_ENV || 'development',
   host: process.env.HOST || 'localhost',

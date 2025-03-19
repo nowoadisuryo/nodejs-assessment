@@ -46,6 +46,8 @@ class TeacherRepository {
     throwIfMissing(studentEmails, 'studentEmails');
 
     const teacher = await this.findByEmail(teacherEmail);
+
+    // if a teacher is not found, then throw an error
     if (!teacher) {
       this.logger.error('Teacher is not found');
       throw new Error('Teacher is not found');
@@ -54,6 +56,8 @@ class TeacherRepository {
     const students = await this.Student.findAll({
       where: { email: studentEmails },
     });
+
+    // if some students are not found, then throw an error
     if (students.length !== studentEmails.length) {
       this.logger.error('Some students are not found');
       throw new Error('Some students are not found');
@@ -61,23 +65,24 @@ class TeacherRepository {
 
     this.logger.info('[TeacherRepository] Trying to register students');
 
+    // register students
     await teacher.addStudents(students);
     return teacher;
   }
 
   /**
-   * Find teachers within the array
+   * Find teachers
    * @param {Array<string>} teacherEmails - array of teacher's email
    * @returns {object} - array of teacher
    */
-  async findTeachersInArray(teacherEmails) {
+  async findTeachers(teacherEmails) {
     this.logger.info(
-      `[TeacherRepository] Trying to findAll teachers within the array - ${teacherEmails}`
+      `[TeacherRepository] Trying to findAll teachers - ${teacherEmails}`
     );
 
     return await this.Teacher.findAll({
-      where: { email: { [Op.in]: teacherEmails } },
-      raw: true,
+      where: { email: { [Op.in]: teacherEmails } }, // find by array of techer's email
+      raw: true, // return as an object
     });
   }
 
@@ -87,7 +92,9 @@ class TeacherRepository {
    * @returns {Array<string>} - array of student's email
    */
   async findCommonStudents(teacherEmails) {
-    const teachers = await this.findTeachersInArray(teacherEmails);
+    const teachers = await this.findTeachers(teacherEmails);
+
+    // if some teachers are not found, then throw an error
     if (teachers.length !== teacherEmails.length) {
       this.logger.error('Some teachers are not found');
       throw new Error('Some teachers are not found');
@@ -110,7 +117,7 @@ class TeacherRepository {
       having: Sequelize.literal(
         `COUNT(DISTINCT teachers.email) = ${teacherEmails.length}`
       ), // ensures that each student is linked to exactly all the given teachers
-      raw: true,
+      raw: true, // return as an object
     });
 
     // map the result to extract the students email
@@ -124,6 +131,8 @@ class TeacherRepository {
    */
   async findRegisteredStudents(teacherEmail) {
     const teacher = await this.findByEmail(teacherEmail);
+
+    // if a teacher is not found, then throw an error
     if (!teacher) {
       this.logger.error('Teacher is not found');
       throw new Error('Teacher is not found');
@@ -132,19 +141,19 @@ class TeacherRepository {
     this.logger.info('[TeacherRepository] Trying to find registered students');
 
     const result = await this.Student.findAll({
-      attributes: ['email'],
-      where: { suspended: false },
+      attributes: ['email'], // select field email
+      where: { suspended: false }, // find unsuspended students
       include: [
         {
-          model: this.Teacher,
+          model: this.Teacher, // JOIN with Teacher
           as: 'teachers',
-          attributes: [],
-          where: { email: teacherEmail },
-          through: { attributes: [] },
+          attributes: [], // excludes all attributes from Teacher
+          where: { email: teacherEmail }, // find by teacher's email
+          through: { attributes: [] }, // excludes unnecessary columns from the join table
         },
       ],
-      group: ['Student.email'],
-      raw: true,
+      group: ['Student.email'], // ensures one row per students
+      raw: true, // return as an object
     });
 
     return result;

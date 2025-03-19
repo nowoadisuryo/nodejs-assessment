@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+// global error handle middleware
 const errorHandler = (err, req, res, next) => {
   res.status(err.status || 500).json({
     error: err.message || 'Internal Server Error',

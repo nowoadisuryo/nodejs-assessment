@@ -3,8 +3,8 @@ const { createLogger, format, transports } = require('winston');
 const { logging } = require('../config');
 
 /**
- * Winston logger instance.
- * Configured with timestamp, console logging, and file logging.
+ * Winston logger instance
+ * Configured with timestamp, console logging, and file logging
  */
 const logger = createLogger({
   level: logging.level,

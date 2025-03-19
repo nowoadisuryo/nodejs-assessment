@@ -10,6 +10,7 @@ const { logger } = require('../utils');
 
 const container = createContainer();
 
+// register utils, models, repositories, controllers, and services for dependecy injection
 container.register({
   config: asValue(config),
   logger: asValue(logger),
@@ -21,9 +22,8 @@ container.register({
   teacherService: asClass(TeacherService).singleton(),
 });
 
+// seperate models, repositories, controllers, and services into different fields
 container.register({
-  config: asValue(config),
-  logger: asValue(logger),
   models: asFunction(({ teacherModel, studentModel }) => ({
     teacherModel,
     studentModel,

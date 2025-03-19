@@ -67,7 +67,7 @@ class TeacherService {
     const emails = extractEmailsFromText(notification);
 
     if (emails.length > 0) {
-      // filter student not suspended and get registered students of a teacher
+      // get unsuspended students and get registered students of a teacher
       const [eligibleEmails, registeredStudentsEmail] = await Promise.all([
         this.studentRepository.findByEmailsNotSuspended(emails),
         this.teacherRepository.findRegisteredStudents(teacher),
@@ -85,6 +85,7 @@ class TeacherService {
         recipients: uniqueEmails,
       };
     } else {
+      // get registered students of a teacher
       const registeredStudentsEmail =
         await this.teacherRepository.findRegisteredStudents(teacher);
 

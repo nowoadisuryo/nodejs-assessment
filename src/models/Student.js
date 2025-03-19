@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 
 const sequelize = require('../config/database');
 
+// define model definition for Student entity
 const Student = sequelize.define(
   'Student',
   {

@@ -37,11 +37,14 @@ class StudentRepository {
    */
   async suspendStudent(studentEmail) {
     const student = await this.findByEmail(studentEmail);
+
+    // if a student is not found, then throw an error
     if (!student) {
       this.logger.error('Student is not found');
       throw new Error('Student is not found');
     }
 
+    // if a student was already suspended, then throw an error
     if (student.suspended === true) {
       this.logger.error('Student was already suspended');
       throw new Error('Student was already suspended');
@@ -49,6 +52,7 @@ class StudentRepository {
 
     this.logger.info('[StudentRepository] Trying to suspend a student');
 
+    // suspend the student
     await student.update({ suspended: true });
     await student.save();
     return student;
@@ -65,9 +69,9 @@ class StudentRepository {
     );
 
     return await this.Student.findAll({
-      attributes: ['email'],
-      where: { email: { [Op.in]: emails }, suspended: false },
-      raw: true,
+      attributes: ['email'], // select email field
+      where: { email: { [Op.in]: emails }, suspended: false }, // where students are not suspended
+      raw: true, // return as an object
     });
   }
 }

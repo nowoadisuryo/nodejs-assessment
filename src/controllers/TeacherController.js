@@ -51,6 +51,8 @@ class TeacherController {
     try {
       const { teacher } = req.query;
       throwIfMissing(teacher, 'teacher');
+
+      // if input teacher is not an array, then convert it to an array
       const _teacher = Array.isArray(teacher) ? teacher : [teacher];
 
       const result = await this.teacherService.commonStudents(_teacher);
