@@ -2,6 +2,7 @@ const { Op, Sequelize } = require('sequelize');
 const {
   assert: { throwIfMissing },
 } = require('../utils');
+const { NotFoundError } = require('../errors');
 
 /**
  * Teacher Repository
@@ -50,7 +51,7 @@ class TeacherRepository {
     // if a teacher is not found, then throw an error
     if (!teacher) {
       this.logger.error('Teacher is not found');
-      throw new Error('Teacher is not found');
+      throw new NotFoundError('Teacher is not found');
     }
 
     const students = await this.Student.findAll({
@@ -60,7 +61,7 @@ class TeacherRepository {
     // if some students are not found, then throw an error
     if (students.length !== studentEmails.length) {
       this.logger.error('Some students are not found');
-      throw new Error('Some students are not found');
+      throw new NotFoundError('Some students are not found');
     }
 
     this.logger.info('[TeacherRepository] Trying to register students');
@@ -97,7 +98,7 @@ class TeacherRepository {
     // if some teachers are not found, then throw an error
     if (teachers.length !== teacherEmails.length) {
       this.logger.error('Some teachers are not found');
-      throw new Error('Some teachers are not found');
+      throw new NotFoundError('Some teachers are not found');
     }
 
     this.logger.info('[TeacherRepository] Trying to find common students');
@@ -135,7 +136,7 @@ class TeacherRepository {
     // if a teacher is not found, then throw an error
     if (!teacher) {
       this.logger.error('Teacher is not found');
-      throw new Error('Teacher is not found');
+      throw new NotFoundError('Teacher is not found');
     }
 
     this.logger.info('[TeacherRepository] Trying to find registered students');

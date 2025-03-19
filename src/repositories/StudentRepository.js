@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const { NotFoundError, BadRequestError } = require('../errors');
 
 /**
  * Student Repository
@@ -41,13 +42,13 @@ class StudentRepository {
     // if a student is not found, then throw an error
     if (!student) {
       this.logger.error('Student is not found');
-      throw new Error('Student is not found');
+      throw new NotFoundError('Student is not found');
     }
 
     // if a student was already suspended, then throw an error
     if (student.suspended === true) {
       this.logger.error('Student was already suspended');
-      throw new Error('Student was already suspended');
+      throw new BadRequestError('Student was already suspended');
     }
 
     this.logger.info('[StudentRepository] Trying to suspend a student');
