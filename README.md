@@ -8,6 +8,20 @@ Use this link to interact with the API.
 
 ---
 
+# **Initial Data**
+
+### **Students**
+
+![Students](image-1.png)
+
+### **Teachers**
+
+![Teachers](image-2.png)
+
+### **Teacher_Student**
+
+## ![Teacher_Student](image-3.png)
+
 # **API Server Setup Guide On Windows**
 
 ## Prerequisites
@@ -80,13 +94,14 @@ Follow these steps to run the API server locally:
 ### **5. Seed the Database**
 
 - Ensure MySQL is running.
-- Create the database manually.
-- Open MySQL Workbench or any MySQL client.
-- Connect to the MySQL server and then execute this query:
+- Create the database manually:
 
-  ```sh
-  CREATE DATABASE IF NOT EXISTS `nowo_nodejs_assessment`;
-  ```
+  - Open MySQL Workbench or any MySQL client.
+  - Connect to the MySQL server and then execute this query:
+
+    ```sh
+    CREATE DATABASE IF NOT EXISTS `nowo_nodejs_assessment`;
+    ```
 
 - Run the database seed data:
   ```sh
